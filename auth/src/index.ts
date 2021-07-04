@@ -8,6 +8,7 @@ import { signupRouter } from './routes/signup';
 import { healthzRouter } from './routes/healthz';
 
 import { errorHandler } from './middlewares/error-handler';
+import { NotFoundError } from './errors/not-found-error';
 
 const app = express();
 app.use(json());
@@ -17,6 +18,9 @@ app.use(signinRouter);
 app.use(signoutRouter);
 app.use(signupRouter);
 app.use(healthzRouter);
+app.get('*', () => {
+  throw new NotFoundError();
+});
 
 app.use(errorHandler);
 
