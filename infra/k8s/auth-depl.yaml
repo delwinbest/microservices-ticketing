@@ -19,18 +19,18 @@ spec:
           resources:
             limits:
               memory: '128Mi'
-              cpu: '150m'
+              cpu: '100m'
           ports:
             - containerPort: 3000
-          # livenessProbe:
-          #   httpGet:
-          #     path: /api/users/healthz
-          #     port: 3000
-          #     httpHeaders:
-          #       - name: Content-Type
-          #         value: application/json
-          #   initialDelaySeconds: 60
-          #   periodSeconds: 3
+          livenessProbe:
+            httpGet:
+              path: /api/users/healthz
+              port: 3000
+              httpHeaders:
+                - name: Content-Type
+                  value: application/json
+            initialDelaySeconds: 360
+            periodSeconds: 3
 ---
 apiVersion: v1
 kind: Service

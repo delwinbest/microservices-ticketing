@@ -9,8 +9,7 @@ metadata:
     name: ingress-service
 spec:
   rules:
-    - host: ticketing.delwinbest.com
-      http:
+    - http:
         paths:
           - pathType: Prefix
             path: '/api/users/?(.*)'
@@ -19,3 +18,4 @@ spec:
                 name: auth-srv
                 port:
                   number: 3000
+      # host: ticketing.delwinbest.com
