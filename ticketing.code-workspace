@@ -2,6 +2,9 @@
 	"folders": [
 		{
 			"path": "."
+		},
+		{
+			"path": "../../Google Drive/06_SSHKeys/kubectl_secrets"
 		}
 	],
 	"settings": {

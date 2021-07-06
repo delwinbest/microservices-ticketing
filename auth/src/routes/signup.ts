@@ -48,7 +48,7 @@ router.post(
         id: user.id,
         email: user.email,
       },
-      'sfsdfasfs',
+      process.env.JWT_KEY!, // Check for key in index.js
     );
 
     // Store it on the session object

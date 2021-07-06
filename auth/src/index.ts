@@ -36,6 +36,9 @@ app.use(errorHandler);
 
 const start = async () => {
   console.log('App starting...');
+  if (!process.env.JWT_KEY) {
+    throw new Error('JWT_KEY is not defined');
+  }
   try {
     console.log('Connecting to mongodb://auth-mongo-srv:27017/auth..');
     await mongoose.connect('mongodb://auth-mongo-srv:27017/auth', {
@@ -44,7 +47,7 @@ const start = async () => {
       useCreateIndex: true,
     });
   } catch (err) {
-    console.error(err);
+    throw new Error(err);
     return;
   }
   app.listen(3000, () => {
