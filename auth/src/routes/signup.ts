@@ -51,7 +51,7 @@ router.post(
     req.session = { jwt: userJwt };
 
     res.status(201).send(user);
-    console.log('User succesfully created');
+    // console.log('User succesfully created');
   },
 );
 
