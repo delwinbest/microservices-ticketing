@@ -1,28 +1,18 @@
 import { useState } from 'react';
+import useRequest from '../../hooks/useRequest';
 
 const signup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [errors, setErrors] = useState([]);
+  const { doRequest, errors } = useRequest({
+    url: '/api/users/signup',
+    method: 'POST',
+    body: { email, password },
+  });
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
-    };
-
-    try {
-      await fetch('/api/users/signup', requestOptions).then((response) => {
-        if (!response.ok) {
-          throw response;
-        }
-      });
-    } catch (err) {
-      const { errors } = await err.json();
-      setErrors(errors);
-    }
+    doRequest();
   };
 
   return (
@@ -46,16 +36,7 @@ const signup = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
       </div>
-      {errors.length > 0 && (
-        <div className="alert alert-danger">
-          <h4>Oooop....</h4>
-          <ul className="my-0">
-            {errors.map((err) => (
-              <li key={err.message}>{err.message}</li>
-            ))}
-          </ul>
-        </div>
-      )}
+      {errors}
       <br />
       <button className="btn btn-primary">Sign Up</button>
     </form>
