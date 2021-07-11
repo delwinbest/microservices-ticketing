@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const useRequest = ({ url, method, body }) => {
+const useRequest = ({ url, method, body, onSuccess }) => {
   const [errors, setErrors] = useState(null);
 
   const doRequest = async () => {
@@ -12,12 +12,15 @@ const useRequest = ({ url, method, body }) => {
 
     try {
       setErrors(null);
-      const response = await fetch('/api/users/signup', requestOptions);
+      const response = await fetch(url, requestOptions);
       if (!response.ok) {
         throw response;
       }
       const responseData = await response.json();
       console.log(responseData);
+      if (onSuccess) {
+        onSuccess(responseData);
+      }
       return responseData;
     } catch (err) {
       const { errors } = await err.json();
