@@ -6,9 +6,12 @@ const start = async () => {
   if (!process.env.JWT_KEY) {
     throw new Error('JWT_KEY is not defined');
   }
+  if (!process.env.MONGO_URI) {
+    throw new Error('MONGO_URI is not defined');
+  }
   try {
-    console.log('Connecting to mongodb://tickets-mongo-srv:27017/tickets..');
-    await mongoose.connect('mongodb://tickets-mongo-srv:27017/tickets', {
+    console.log('Connecting to ', process.env.MONGO_URI);
+    await mongoose.connect(process.env.MONGO_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true,
