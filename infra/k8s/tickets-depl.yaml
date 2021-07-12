@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tickets-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tickets
+  template:
+    metadata:
+      labels:
+        app: tickets
+    spec:
+      containers:
+        - name: tickets
+          # image: us.gcr.io/ticketing-dev-318704/tickets
+          image: delwinrbest/tickets
+          env:
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_KEY
+          # resources:
+          #   limits:
+          #     memory: '128Mi'
+          #     cpu: '200m'
+          ports:
+            - containerPort: 3000
+          livenessProbe:
+            httpGet:
+              path: /api/users/healthz
+              port: 3000
+              httpHeaders:
+                - name: Content-Type
+                  value: application/json
+            initialDelaySeconds: 360
+            periodSeconds: 3
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tickets-srv
+spec:
+  selector:
+    app: tickets
+  ports:
+    - name: tickets
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
