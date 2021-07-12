@@ -9,8 +9,7 @@ import { signoutRouter } from './routes/signout';
 import { signupRouter } from './routes/signup';
 import { healthzRouter } from './routes/healthz';
 
-import { errorHandler } from './middlewares/error-handler';
-import { NotFoundError } from './errors/not-found-error';
+import { errorHandler, NotFoundError } from '@drbtickets/common';
 
 const app = express();
 app.set('trust proxy', true);
