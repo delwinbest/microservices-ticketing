@@ -32,7 +32,7 @@ spec:
             - containerPort: 3000
           livenessProbe:
             httpGet:
-              path: /api/users/healthz
+              path: /api/tickets/healthz
               port: 3000
               httpHeaders:
                 - name: Content-Type
