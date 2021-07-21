@@ -8,7 +8,6 @@ class TicketCreatedListener extends Listener<TicketCreatedEvent> {
   queueGroupName = 'payments-service';
   onMessage(data: TicketCreatedEvent['data'], msg: Message) {
     console.log('Event Data:', data);
-    console.log(data.title);
     msg.ack();
   }
 }
