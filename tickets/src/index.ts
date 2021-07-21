@@ -16,6 +16,17 @@ const start = async () => {
       'publisher001',
       'http://nats-srv:4222',
     );
+    natsWrapper.client.on('close', () => {
+      console.log('NATS connection closed!');
+      process.exit();
+    });
+    process.on('SIGINT', () => {
+      natsWrapper.client.close();
+    });
+    process.on('SIGTERM', () => {
+      natsWrapper.client.close();
+    });
+
     console.log('Connecting to ', process.env.MONGO_URI);
     await mongoose.connect(process.env.MONGO_URI, {
       useNewUrlParser: true,
