@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import { app } from './app';
+import { natsWrapper } from './nats-wrapper';
 
 const start = async () => {
   console.log('App starting...');
@@ -10,6 +11,11 @@ const start = async () => {
     throw new Error('MONGO_URI is not defined');
   }
   try {
+    await natsWrapper.connect(
+      'ticketing',
+      'publisher001',
+      'http://nats-srv:4222',
+    );
     console.log('Connecting to ', process.env.MONGO_URI);
     await mongoose.connect(process.env.MONGO_URI, {
       useNewUrlParser: true,
@@ -18,7 +24,6 @@ const start = async () => {
     });
   } catch (err) {
     throw new Error(err);
-    return;
   }
   app.listen(3000, () => {
     console.log('Listening on port 3000...');

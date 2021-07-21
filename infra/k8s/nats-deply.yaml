@@ -31,7 +31,7 @@ spec:
             'ticketing'
           ]
           ports:
-            - containerPort: 8080
+            - containerPort: 4222
 ---
 apiVersion: v1
 kind: Service
@@ -39,7 +39,7 @@ metadata:
   name: nats-srv
 spec:
   selector:
-    app: myapp
+    app: nats
   ports:
     - name: client
       protocol: TCP
