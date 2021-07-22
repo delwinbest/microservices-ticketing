@@ -19,12 +19,12 @@ app.use(
     secure: process.env.NODE_ENV !== 'test',
   }),
 );
+app.use(healthzRouter);
 app.use(currentUser);
 app.use(showTicketRouter);
 app.use(createTicketRouter);
 app.use(indexTicketRouter);
 app.use(updateTicketRouter);
-app.use(healthzRouter);
 
 app.all('*', async (req, res) => {
   throw new NotFoundError();

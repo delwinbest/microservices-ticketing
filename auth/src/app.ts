@@ -20,12 +20,12 @@ app.use(
     secure: process.env.NODE_ENV !== 'test',
   }),
 );
-
+app.use(healthzRouter);
 app.use(currentUserRouter);
 app.use(signinRouter);
 app.use(signoutRouter);
 app.use(signupRouter);
-app.use(healthzRouter);
+
 app.all('*', async (req, res) => {
   throw new NotFoundError();
 });
