@@ -2,7 +2,10 @@ import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
 
 let mongo: any;
+jest.mock('../nats-wrapper');
+
 beforeAll(async () => {
+  jest.clearAllMocks();
   // Define environment variables
   process.env.JWT_KEY = 'QWERTY';
 
