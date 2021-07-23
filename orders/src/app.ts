@@ -20,6 +20,7 @@ app.use(
   }),
 );
 app.use(healthzRouter);
+app.use(currentUser);
 app.use(newOrderRouter);
 app.use(showOrderRouter);
 app.use(deleteOrderRouter);
