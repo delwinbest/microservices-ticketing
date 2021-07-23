@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
+import { Order, OrderStatus } from './order';
 
-// Model which represents ticket
 interface TicketAttrs {
   title: string;
   price: number;
@@ -9,6 +9,7 @@ interface TicketAttrs {
 export interface TicketDoc extends mongoose.Document {
   title: string;
   price: number;
+  isReserved(): Promise<boolean>;
 }
 
 interface TicketModel extends mongoose.Model<TicketDoc> {
@@ -37,8 +38,25 @@ const ticketSchema = new mongoose.Schema(
   },
 );
 
+// Statics is to add a method directly to the model itself
 ticketSchema.statics.build = (attrs: TicketAttrs) => {
   return new Ticket(attrs);
+};
+// Add a method adds a function to the ticket document
+ticketSchema.methods.isReserved = async function () {
+  // this === the ticket document that we just called 'isReserved' on
+  const existingOrder = await Order.findOne({
+    ticket: this as any,
+    status: {
+      $in: [
+        OrderStatus.Created,
+        OrderStatus.AwaitingPayment,
+        OrderStatus.Complete,
+      ],
+    },
+  });
+
+  return !!existingOrder;
 };
 
 const Ticket = mongoose.model<TicketDoc, TicketModel>('Ticket', ticketSchema);

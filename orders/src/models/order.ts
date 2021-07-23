@@ -2,6 +2,8 @@ import mongoose from 'mongoose';
 import { OrderStatus } from '@drbtickets/common';
 import { TicketDoc } from './ticket';
 
+export { OrderStatus };
+
 // An interface that descibes the new order properties
 interface OrderAttrs {
   userId: string;
@@ -34,7 +36,7 @@ const orderSchema = new mongoose.Schema(
       type: String,
       required: true,
       enum: Object.values(OrderStatus),
-      default: OrderStatus.created,
+      default: OrderStatus.Created,
     },
     expiresAt: {
       type: mongoose.Schema.Types.Date,
