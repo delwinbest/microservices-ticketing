@@ -22,7 +22,7 @@ router.post(
       .not()
       .isEmpty()
       .custom((input: string) => mongoose.Types.ObjectId.isValid(input)) // coupling to the tickets service DB type. consider removing.
-      .withMessage('TicketId must be provided'),
+      .withMessage('Valid TicketId must be provided'),
   ],
   validateRequest,
   async (req: Request, res: Response) => {
