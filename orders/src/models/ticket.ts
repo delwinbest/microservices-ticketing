@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import { Order, OrderStatus } from './order';
 
 interface TicketAttrs {
+  id: string;
   title: string;
   price: number;
 }
@@ -39,7 +40,7 @@ const ticketSchema = new mongoose.Schema(
 
 // Statics is to add a method directly to the model itself
 ticketSchema.statics.build = (attrs: TicketAttrs) => {
-  return new Ticket(attrs);
+  return new Ticket({ _id: attrs.id, title: attrs.title, price: attrs.price });
 };
 // Add a method adds a function to the ticket document
 ticketSchema.methods.isReserved = async function () {

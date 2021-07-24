@@ -14,7 +14,8 @@ it('order only be accessed if the user is signed in', async () => {
 
 it('returns an error if a user tries to acces another user order', async () => {
   // Create ticket
-  const ticket = Ticket.build({ title: 'Ticket', price: 20 });
+  const fakeId = mongoose.Types.ObjectId().toHexString();
+  const ticket = Ticket.build({ id: fakeId, title: 'Ticket', price: 20 });
   await ticket.save();
   // Make request to build order with ticket
   const user01 = signin();
@@ -32,9 +33,9 @@ it('returns an error if a user tries to acces another user order', async () => {
 });
 
 it('marks an order as cancelled', async () => {
-  // Create a ticket
   // Create ticket
-  const ticket = Ticket.build({ title: 'Ticket', price: 20 });
+  const fakeId = mongoose.Types.ObjectId().toHexString();
+  const ticket = Ticket.build({ id: fakeId, title: 'Ticket', price: 20 });
   await ticket.save();
   // Make request to build order with ticket
   const user = signin();
@@ -55,9 +56,9 @@ it('marks an order as cancelled', async () => {
 });
 
 it('publishes an order cancelled event', async () => {
-  // Create a ticket
   // Create ticket
-  const ticket = Ticket.build({ title: 'Ticket', price: 20 });
+  const fakeId = mongoose.Types.ObjectId().toHexString();
+  const ticket = Ticket.build({ id: fakeId, title: 'Ticket', price: 20 });
   await ticket.save();
   // Make request to build order with ticket
   const user = signin();

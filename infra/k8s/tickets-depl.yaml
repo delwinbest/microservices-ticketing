@@ -45,7 +45,7 @@ spec:
               httpHeaders:
                 - name: Content-Type
                   value: application/json
-            initialDelaySeconds: 120
+            initialDelaySeconds: 60
             periodSeconds: 3
 ---
 apiVersion: v1
