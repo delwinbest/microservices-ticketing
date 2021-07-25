@@ -2,7 +2,7 @@ import { response } from 'express';
 import request from 'supertest';
 import { app } from '../../app';
 import { signin } from '../../test/signin';
-import { Ticket } from '../../models/tickets';
+import { Ticket } from '../../models/ticket';
 import { natsWrapper } from '../../nats-wrapper';
 
 it('has a route handler listening to /api/tickets for post requests', async () => {

@@ -6,7 +6,7 @@ import {
   requireAuth,
   NotAuthorizedError,
 } from '@drbtickets/common';
-import { Ticket } from '../models/tickets';
+import { Ticket } from '../models/ticket';
 import { TicketUpdatedPublisher } from '../events/publishers/ticket-updated-publiser';
 import { natsWrapper } from '../nats-wrapper';
 

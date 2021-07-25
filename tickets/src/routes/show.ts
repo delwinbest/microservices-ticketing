@@ -5,7 +5,7 @@ import {
   validateRequest,
 } from '@drbtickets/common';
 import { body } from 'express-validator';
-import { Ticket } from '../models/tickets';
+import { Ticket } from '../models/ticket';
 
 const router = express.Router();
 

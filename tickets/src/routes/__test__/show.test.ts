@@ -2,7 +2,7 @@ import { response } from 'express';
 import request from 'supertest';
 import { app } from '../../app';
 import { signin } from '../../test/signin';
-import { Ticket } from '../../models/tickets';
+import { Ticket } from '../../models/ticket';
 import mongooose from 'mongoose';
 
 it('returns a 404 if the ticket is not found', async () => {
