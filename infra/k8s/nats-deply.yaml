@@ -15,10 +15,10 @@ spec:
       containers:
         - name: nats
           image: nats-streaming
-          resources:
-            limits:
-              memory: '128Mi'
-              cpu: '500m'
+          # resources:
+          #   limits:
+          #     memory: '128Mi'
+          #     cpu: '500m'
           args: [
             '-p', '4222',
             '-m', '8222',
