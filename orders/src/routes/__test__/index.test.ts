@@ -14,6 +14,7 @@ it('can only be accessed if the user is signed in', async () => {
 
 const buildTicket = async (title: string) => {
   const ticket = Ticket.build({
+    id: 'fakeId',
     title: title,
     price: 20,
   });

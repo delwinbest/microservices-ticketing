@@ -8,8 +8,19 @@ export class TicketCreatedListener extends Listener<TicketCreatedEvent> {
   queueGroupName = queueGroupName;
   async onMessage(data: TicketCreatedEvent['data'], msg: Message) {
     const { id, title, price } = data;
-    const ticket = Ticket.build({ id, title, price });
-    await ticket.save();
+    const existingTicket = await Ticket.findById(data.id);
+    if (existingTicket) {
+      // throw new Error(`Ticket Exists: ${existingTicket}`);
+      // Ticket Exists, attempt recovery
+      // TODO: Figure out why ticket exists (possible failure)
+      console.log('WARNING, TICKET EXISTS, attempting recovery...');
+      if (existingTicket.version !== 0) {
+        throw new Error('Could not recover, ticket version !== 0');
+      }
+    } else {
+      const ticket = Ticket.build({ id, title, price });
+      await ticket.save();
+    }
     msg.ack();
   }
 }

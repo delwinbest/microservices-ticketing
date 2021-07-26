@@ -20,7 +20,6 @@ const runTest = async () => {
       body: JSON.stringify(body),
       agent: httpsAgent,
     });
-    let responseJSON = await response.json();
     cookie = await response.headers.raw()['set-cookie'];
 
     // Create Ticket
@@ -38,7 +37,7 @@ const runTest = async () => {
       }),
       agent: httpsAgent,
     });
-    responseJSON = await response.json();
+    let responseJSON = await response.json();
 
     const { id } = responseJSON;
 
@@ -53,12 +52,10 @@ const runTest = async () => {
       credentials: 'include',
       body: JSON.stringify({
         title: 'Updated Title',
-        price: 1,
+        price: 10,
       }),
       agent: httpsAgent,
     });
-    responseJSON = await response.json();
-
     // Update Ticket 02
     response = await fetch(`https://localhost/api/tickets/${id}`, {
       method: 'put',
@@ -70,50 +67,15 @@ const runTest = async () => {
       credentials: 'include',
       body: JSON.stringify({
         title: 'Updated Title',
-        price: 2,
+        price: 15,
       }),
       agent: httpsAgent,
     });
-    responseJSON = await response.json();
-
-    // Update Ticket 03
-    response = await fetch(`https://localhost/api/tickets/${id}`, {
-      method: 'put',
-      headers: {
-        'Content-Type': 'application/json',
-        cookie: cookie,
-      },
-      Authorization: cookie,
-      credentials: 'include',
-      body: JSON.stringify({
-        title: 'Updated Title',
-        price: 3,
-      }),
-      agent: httpsAgent,
-    });
-    responseJSON = await response.json();
-
-    // Update Ticket 04
-    response = await fetch(`https://localhost/api/tickets/${id}`, {
-      method: 'put',
-      headers: {
-        'Content-Type': 'application/json',
-        cookie: cookie,
-      },
-      Authorization: cookie,
-      credentials: 'include',
-      body: JSON.stringify({
-        title: 'Updated Title',
-        price: 4,
-      }),
-      agent: httpsAgent,
-    });
-    responseJSON = await response.json();
   } catch (err) {
     console.log(err);
   }
 };
 
-for (let i = 0; i < 100; i++) {
+for (let i = 0; i < 400; i++) {
   runTest();
 }
