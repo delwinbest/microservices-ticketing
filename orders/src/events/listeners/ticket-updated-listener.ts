@@ -7,14 +7,14 @@ export class TicketUpdatedListener extends Listener<TicketUpdatedEvent> {
   subject: Subjects.TicketUpdated = Subjects.TicketUpdated;
   queueGroupName = queueGroupName;
   async onMessage(data: TicketUpdatedEvent['data'], msg: Message) {
-    const { title, price } = data;
+    const { title, price, version } = data;
     const ticket = await Ticket.findByEvent(data);
 
     if (!ticket) {
       // throw new Error('Ticket ID orq version not found');
       console.log('Ticket does not exist, aborting');
     } else {
-      ticket.set({ title, price });
+      ticket.set({ title, price, version });
       await ticket.save();
       msg.ack();
     }

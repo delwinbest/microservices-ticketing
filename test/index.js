@@ -20,6 +20,16 @@ const runTest = async () => {
       body: JSON.stringify(body),
       agent: httpsAgent,
     });
+    if (response.status === 400) {
+      response = await fetch('https://localhost/api/users/signup', {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+        agent: httpsAgent,
+      });
+    }
     cookie = await response.headers.raw()['set-cookie'];
 
     // Create Ticket
@@ -76,6 +86,6 @@ const runTest = async () => {
   }
 };
 
-for (let i = 0; i < 400; i++) {
+for (let i = 0; i < 100; i++) {
   runTest();
 }

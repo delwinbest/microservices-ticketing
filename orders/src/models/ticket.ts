@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import { Order, OrderStatus } from './order';
-import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
+// import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 
 interface TicketAttrs {
   id: string;
@@ -56,7 +56,16 @@ ticketSchema.statics.findByEvent = (event: { id: string; version: number }) => {
 };
 
 ticketSchema.set('versionKey', 'version');
-ticketSchema.plugin(updateIfCurrentPlugin);
+// ticketSchema.plugin(updateIfCurrentPlugin);
+
+// Replaces updateIfCurrent module. DB agnostic
+ticketSchema.pre('save', function (done) {
+  this.$where = {
+    version: this.get('version') - 1, // assumes we are incrementing versions by 1
+  };
+  done();
+});
+
 // Add a method adds a function to the ticket document
 ticketSchema.methods.isReserved = async function () {
   // this === the ticket document that we just called 'isReserved' on
