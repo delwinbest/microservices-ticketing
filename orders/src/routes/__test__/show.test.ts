@@ -2,10 +2,15 @@ import request from 'supertest';
 import { app } from '../../app';
 import { Ticket } from '../../models/ticket';
 import { signin } from '../../test/signin';
+import mongoose from 'mongoose';
 
 it('fetches the order', async () => {
   // Create ticket
-  const ticket = Ticket.build({ id: 'fakeId', title: 'Ticket', price: 20 });
+  const ticket = Ticket.build({
+    id: new mongoose.Types.ObjectId().toHexString(),
+    title: 'Ticket',
+    price: 20,
+  });
   await ticket.save();
   // Make request to build order with ticket
   const user = signin();
@@ -24,7 +29,11 @@ it('fetches the order', async () => {
 
 it('returns an error if a user tries to acces another user order', async () => {
   // Create ticket
-  const ticket = Ticket.build({ id: 'fakeId', title: 'Ticket', price: 20 });
+  const ticket = Ticket.build({
+    id: new mongoose.Types.ObjectId().toHexString(),
+    title: 'Ticket',
+    price: 20,
+  });
   await ticket.save();
   // Make request to build order with ticket
   const user01 = signin();

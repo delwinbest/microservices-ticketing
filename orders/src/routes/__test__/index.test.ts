@@ -2,6 +2,7 @@ import request from 'supertest';
 import { app } from '../../app';
 import { signin } from '../../test/signin';
 import { Ticket } from '../../models/ticket';
+import mongoose from 'mongoose';
 
 it('has a GET handler listening to /api/orders for post requests', async () => {
   const response = await request(app).get('/api/orders');
@@ -14,7 +15,7 @@ it('can only be accessed if the user is signed in', async () => {
 
 const buildTicket = async (title: string) => {
   const ticket = Ticket.build({
-    id: 'fakeId',
+    id: new mongoose.Types.ObjectId().toHexString(),
     title: title,
     price: 20,
   });
