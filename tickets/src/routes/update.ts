@@ -5,6 +5,7 @@ import {
   NotFoundError,
   requireAuth,
   NotAuthorizedError,
+  BadRequestError,
 } from '@drbtickets/common';
 import { Ticket } from '../models/ticket';
 import { TicketUpdatedPublisher } from '../events/publishers/ticket-updated-publiser';
@@ -32,6 +33,9 @@ router.put(
       throw new NotAuthorizedError();
     }
 
+    if (ticket.orderId) {
+      throw new BadRequestError('Cannot edit a reserved ticket.');
+    }
     ticket.set({ title: req.body.title, price: req.body.price });
     await ticket.save();
     new TicketUpdatedPublisher(natsWrapper.client).publish({
