@@ -5,7 +5,6 @@ let mongo: any;
 jest.mock('../nats-wrapper');
 
 beforeAll(async () => {
-  jest.clearAllMocks();
   // Define environment variables
   process.env.JWT_KEY = 'QWERTY';
 
@@ -19,6 +18,7 @@ beforeAll(async () => {
 });
 
 beforeEach(async () => {
+  jest.clearAllMocks();
   const collections = await mongoose.connection.db.collections();
 
   for (let collection of collections) {
