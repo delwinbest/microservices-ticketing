@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import { OrderStatus } from '@drbtickets/common';
 import { TicketDoc } from './ticket';
-
+import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 export { OrderStatus };
 
 // An interface that descibes the new order properties
@@ -51,13 +51,14 @@ const orderSchema = new mongoose.Schema(
   {
     toJSON: {
       transform(doc, ret) {
-        ret.id = ret._id;
-        delete ret._id;
+        (ret.id = ret._id), delete ret._id;
       },
     },
   },
 );
 
+orderSchema.set('versionKey', 'version');
+orderSchema.plugin(updateIfCurrentPlugin);
 orderSchema.statics.build = (attrs: OrderAttrs) => {
   return new Order(attrs);
 };
