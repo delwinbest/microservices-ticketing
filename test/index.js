@@ -81,11 +81,25 @@ const runTest = async () => {
       }),
       agent: httpsAgent,
     });
+    // Order Ticket 01
+    response = await fetch(`https://localhost/api/orders`, {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+        cookie: cookie,
+      },
+      Authorization: cookie,
+      credentials: 'include',
+      body: JSON.stringify({
+        ticketId: id,
+      }),
+      agent: httpsAgent,
+    });
   } catch (err) {
     console.log(err);
   }
 };
 
-for (let i = 0; i < 100; i++) {
+for (let i = 0; i < 5; i++) {
   runTest();
 }
