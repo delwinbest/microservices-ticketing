@@ -2,7 +2,7 @@ import express from 'express';
 
 const router = express.Router();
 
-router.get('/api/tickets/healthz', (req, res) => {
+router.get('/api/expiration/healthz', (req, res) => {
   res.status(200).send({});
 });
 
