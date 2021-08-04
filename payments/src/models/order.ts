@@ -18,6 +18,7 @@ interface OrderDoc extends mongoose.Document {
 
 interface OrderModel extends mongoose.Model<OrderDoc> {
   build(attrs: OrderAttrs): OrderDoc;
+  findByEvent(event: { id: string; version: number }): Promise<OrderDoc | null>;
 }
 
 const orderSchema = new mongoose.Schema(
@@ -45,6 +46,23 @@ orderSchema.statics.build = (attrs: OrderAttrs) => {
     status: attrs.status,
   });
 };
+
+orderSchema.statics.findByEvent = (event: { id: string; version: number }) => {
+  return Order.findOne({
+    _id: event.id,
+    version: event.version - 1,
+  });
+};
+
+orderSchema.set('versionKey', 'version');
+
+// Replaces updateIfCurrent module. DB agnostic
+orderSchema.pre('save', function (done) {
+  this.$where = {
+    version: this.get('version') - 1, // assumes we are incrementing versions by 1
+  };
+  done();
+});
 
 const Order = mongoose.model<OrderDoc, OrderModel>('Order', orderSchema);
 
