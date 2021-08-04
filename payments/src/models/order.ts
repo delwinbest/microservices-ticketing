@@ -56,13 +56,14 @@ orderSchema.statics.findByEvent = (event: { id: string; version: number }) => {
 
 orderSchema.set('versionKey', 'version');
 
+// **** Not Required because this service not authoritative for Order version ****
 // Replaces updateIfCurrent module. DB agnostic
-orderSchema.pre('save', function (done) {
-  this.$where = {
-    version: this.get('version') - 1, // assumes we are incrementing versions by 1
-  };
-  done();
-});
+// orderSchema.pre('save', function (done) {
+//   this.$where = {
+//     version: this.get('version') - 1, // assumes we are incrementing versions by 1
+//   };
+//   done();
+// });
 
 const Order = mongoose.model<OrderDoc, OrderModel>('Order', orderSchema);
 
