@@ -5,6 +5,7 @@ import cookiesession from 'cookie-session';
 import { errorHandler, NotFoundError, currentUser } from '@drbtickets/common';
 
 import { healthzRouter } from './routes/healthz';
+import { createChargeRouter } from './routes/new';
 
 const app = express();
 app.set('trust proxy', true);
@@ -17,6 +18,7 @@ app.use(
 );
 app.use(healthzRouter);
 app.use(currentUser);
+app.use(createChargeRouter);
 
 app.all('*', async (req, res) => {
   throw new NotFoundError();
