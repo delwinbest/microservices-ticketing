@@ -20,8 +20,6 @@ export class PaymentCreatedListener extends Listener<PaymentCreatedEvent> {
     }
     order.set({ status: OrderStatus.Complete });
     await order.save();
-    console.log(order.expiresAt);
-    console.log(new Date(order.expiresAt).toISOString());
     await new OrderUpdatedPublisher(natsWrapper.client).publish({
       id: order.id,
       version: order.version,
