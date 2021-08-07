@@ -26,7 +26,7 @@ const useRequest = ({ url, method, body, onSuccess }) => {
       const { errors } = await err.json();
       setErrors(
         <div className="alert alert-danger">
-          <h4>Oooop....</h4>
+          <h4>Oooops....</h4>
           <ul className="my-0">
             {errors.map((err) => (
               <li key={err.message}>{err.message}</li>
