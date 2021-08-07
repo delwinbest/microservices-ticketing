@@ -3,6 +3,7 @@ import { app } from '../../app';
 import { signin } from '../../test/signin';
 import mongoose from 'mongoose';
 import { Order } from '../../models/order';
+import { Payment } from '../../models/payment';
 import { OrderStatus } from '@drbtickets/common';
 import { stripe } from '../../stripe';
 
@@ -77,4 +78,10 @@ it('returns a 2014 with valid inputs', async () => {
   // const chargeOptions = (stripe.charges.create as jest.Mock).mock.calls[0][0];
   // expect(stripeCharge!.source).toEqual('tok_visa');
   expect(stripeCharge!.currency).toEqual('usd');
+
+  const payment = await Payment.findOne({
+    orderId: order.id,
+    stripeId: stripeCharge!.id,
+  });
+  expect(payment).not.toBeNull();
 });
