@@ -17,7 +17,7 @@ const useRequest = ({ url, method, body, onSuccess }) => {
         throw response;
       }
       const responseData = await response.json();
-      console.log(responseData);
+      // console.log(responseData);
       if (onSuccess) {
         onSuccess(responseData);
       }
