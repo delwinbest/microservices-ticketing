@@ -1,11 +1,14 @@
 import useRequest from '../../hooks/useRequest';
 import { useState, useEffect } from 'react';
 import Router from 'next/router';
+import getConfig from 'next/config';
+import StripeCheckout from 'react-stripe-checkout';
 
 const OrderShow = ({ order, currentUser }) => {
+  // Only holds serverRuntimeConfig and publicRuntimeConfig
+  const { publicRuntimeConfig } = getConfig();
   const [timeLeft, setTimeLeft] = useState(0);
-  const STRIPE_PUB_KEY = process.env.STRIPE_PUB_KEY;
-  console.log(STRIPE_PUB_KEY);
+  const STRIPE_PUB_KEY = publicRuntimeConfig.STRIPE_PUB_KEY;
 
   useEffect(() => {
     const findTimeLeft = () => {
@@ -50,6 +53,12 @@ const OrderShow = ({ order, currentUser }) => {
       this ticket
       {errors}
       <br />
+      <StripeCheckout
+        token={(token) => console.log(token)}
+        stripeKey={STRIPE_PUB_KEY}
+        amount={order.ticket.price * 100}
+        email={currentUser.email}
+      />
     </div>
   );
 };
