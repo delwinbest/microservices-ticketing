@@ -21,6 +21,12 @@ spec:
           #     cpu: '500m'
           ports:
             - containerPort: 3000
+          env:
+            - name: STRIPE_PUB_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: stripe-pub-key
+                  key: STRIPE_PUB_KEY
 ---
 apiVersion: v1
 kind: Service

@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Router from 'next/router';
 
 const LandingPage = ({ currentUser, tickets }) => {
   const ticketList = tickets.map((ticket) => {
@@ -17,7 +18,15 @@ const LandingPage = ({ currentUser, tickets }) => {
 
   return (
     <div className="">
-      <h1>Tickets</h1>
+      <h1>
+        Tickets{' '}
+        <button
+          className="btn btn-success"
+          onClick={() => Router.push('/tickets/new')}
+        >
+          Create New
+        </button>
+      </h1>
       <table className="table">
         <thead>
           <tr>
