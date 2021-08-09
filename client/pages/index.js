@@ -19,7 +19,7 @@ const LandingPage = ({ currentUser, tickets }) => {
   return (
     <div className="">
       <h1>
-        Tickets{' '}
+        Tickets
         <button
           className="btn btn-success"
           onClick={() => Router.push('/tickets/new')}
