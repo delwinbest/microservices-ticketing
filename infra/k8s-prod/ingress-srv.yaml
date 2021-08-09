@@ -9,8 +9,8 @@ metadata:
     name: ingress-service
 spec:
   rules:
-    - http:
-        host: ticketing.delwinbest.com
+    - host: ticketing.delwinbest.com
+      http:
         paths:
           - path: '/api/payments/?(.*)'
             pathType: Prefix
