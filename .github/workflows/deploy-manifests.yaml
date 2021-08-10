@@ -3,13 +3,15 @@ name: deploy-manifests
 on:
   push:
     branches:
-      - master
+      - dev
     # paths:
     #   - 'infra/**'
 
 env:
   AWS_DEFAULT_REGION: ap-northeast-1
   K8S_CLUSER_NAME: ticketing-dev
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
 
 jobs:
   build:
