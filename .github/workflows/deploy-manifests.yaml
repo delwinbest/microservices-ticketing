@@ -3,9 +3,9 @@ name: deploy-manifests
 on:
   push:
     branches:
-      - dev
-    # paths:
-    #   - 'infra/**'
+      - master
+    paths:
+      - 'infra/**'
 
 env:
   AWS_DEFAULT_REGION: ap-northeast-1
