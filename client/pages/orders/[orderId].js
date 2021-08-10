@@ -8,6 +8,14 @@ const OrderShow = ({ order, currentUser }) => {
   // Only holds serverRuntimeConfig and publicRuntimeConfig
   const { publicRuntimeConfig } = getConfig();
   const [timeLeft, setTimeLeft] = useState(0);
+  const { doRequest, errors } = useRequest({
+    url: '/api/payments',
+    method: 'post',
+    body: {
+      orderId: order.id,
+    },
+    onSuccess: () => Router.push('/orders'),
+  });
   const STRIPE_PUB_KEY = publicRuntimeConfig.STRIPE_PUB_KEY;
 
   useEffect(() => {
@@ -21,16 +29,6 @@ const OrderShow = ({ order, currentUser }) => {
       clearInterval(timerId);
     };
   }, [order]);
-
-  const { doRequest, errors } = useRequest({
-    url: '/api/payments',
-    method: 'post',
-    body: {
-      orderId: order.id,
-      token: 'tok_visa',
-    },
-    onSuccess: (payment) => console.log(payment),
-  });
 
   // TODO implement STRIPE PAY BUTTON
 
@@ -51,14 +49,14 @@ const OrderShow = ({ order, currentUser }) => {
       You have {Math.floor(timeLeft / 60)} minutes and{' '}
       {timeLeft - Math.floor(timeLeft / 60) * 60} seconds remaining to purchase
       this ticket
-      {errors}
       <br />
       <StripeCheckout
-        token={(token) => console.log(token)}
+        token={({ id }) => doRequest({ token: id })}
         stripeKey={STRIPE_PUB_KEY}
         amount={order.ticket.price * 100}
         email={currentUser.email}
       />
+      {errors}
     </div>
   );
 };
