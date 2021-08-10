@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - master
-    # paths:
-    #   - 'infra/**'
+    paths:
+      - 'infra/**'
 
 env:
   AWS_DEFAULT_REGION: ap-northeast-1
@@ -33,7 +33,5 @@ jobs:
       - name: Create kubectl Context
         # run: doctl kubernetes cluster kubeconfig save ticketing-cluster
         run: aws eks update-kubeconfig --region ${{ env.AWS_DEFAULT_REGION }} --name ${{ env.K8S_CLUSER_NAME }}
-      - name: Debug 01
-        run: kubectl config  view
       - name: Init Infra Update
         run: kubectl apply -f infra/k8s && kubectl apply -f infra/k8s-prod
