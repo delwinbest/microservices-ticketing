@@ -14,7 +14,7 @@ const OrderShow = ({ order, currentUser }) => {
     body: {
       orderId: order.id,
     },
-    onSuccess: (payment) => console.log(payment),
+    onSuccess: () => Router.push('/orders'),
   });
   const STRIPE_PUB_KEY = publicRuntimeConfig.STRIPE_PUB_KEY;
 
