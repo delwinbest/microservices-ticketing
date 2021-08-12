@@ -25,7 +25,7 @@ jobs:
           password: ${{secrets.DOCKER_TOKEN}}
 
       - name: Build Container Image
-        run: cd client && docker build -t delwinrbest/client:prod .
+        run: cd client && docker build -f Dockerfile.prod -t delwinrbest/client:prod .
 
       - name: Push Image to Docker Hub
         run: docker push delwinrbest/client:prod
